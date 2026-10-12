@@ -19,12 +19,18 @@ jobs:
 
       - name: Android SDK Kur
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-34 build-tools;34.0.0'
+          log-accepted-android-sdk-licenses: false
+
+      - name: Lisansları Kabul Et
+        run: yes | sdkmanager --licenses || true
 
       - name: gradlew iznini ver
         run: chmod +x gradlew
 
       - name: Debug APK Derle
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: APK'yı Yükle
         uses: actions/upload-artifact@v4
